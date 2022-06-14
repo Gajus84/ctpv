@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    table.head, table.foot { width: 100%; }
+    td.head-rtitle, td.foot-os { text-align: right; }
+    td.head-vol { text-align: center; }
+    .Nd, .Bf, .Op { display: inline; }
+    .Pa, .Ad { font-style: italic; }
+    .Ms { font-weight: bold; }
+    .Bl-diag > dt { font-weight: bold; }
+    code.Nm, .Fl, .Cm, .Ic, code.In, .Fd, .Fn, .Cd { font-weight: bold;
+      font-family: inherit; }
+  </style>
+  <title>CTPV(1)</title>
+</head>
+<body>
+<table class="head">
+  <tr>
+    <td class="head-ltitle">CTPV(1)</td>
+    <td class="head-vol">User Manuals</td>
+    <td class="head-rtitle">CTPV(1)</td>
+  </tr>
+</table>
+<div class="manual-text">
+<section class="Sh">
+<h1 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h1>
+<p class="Pp">ctpv - terminal previewer</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SYNOPSIS"><a class="permalink" href="#SYNOPSIS">SYNOPSIS</a></h1>
+<table class="Nm">
+  <tr>
+    <td><code class="Nm">ctpv</code></td>
+    <td><i>file</i> [<i>w</i>] [<i>h</i>] [<i>x</i>] [<i>y</i>] [<i>id</i>]</td>
+  </tr>
+</table>
+<table class="Nm">
+  <tr>
+    <td><code class="Nm">ctpv</code></td>
+    <td><b>-l</b></td>
+  </tr>
+</table>
+<table class="Nm">
+  <tr>
+    <td><code class="Nm">ctpv</code></td>
+    <td><b>-m</b> [<i>files</i>]...</td>
+  </tr>
+</table>
+<table class="Nm">
+  <tr>
+    <td><code class="Nm">ctpv</code></td>
+    <td><b>-s</b> <i>id</i></td>
+  </tr>
+</table>
+<table class="Nm">
+  <tr>
+    <td><code class="Nm">ctpv</code></td>
+    <td><b>-c</b> <i>id</i></td>
+  </tr>
+</table>
+<table class="Nm">
+  <tr>
+    <td><code class="Nm">ctpv</code></td>
+    <td><b>-e</b> <i>id</i></td>
+  </tr>
+</table>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
+<p class="Pp"><b>ctpv</b> is a previewer utility made for integration into other
+    programs. It supports a variety of &#x201C;previews&#x201D; out of the box
+    (including one for previewing images with <i>ueberzug</i>) and an option for
+    defining custom previews.</p>
+<section class="Ss">
+<h2 class="Ss" id="Integration"><a class="permalink" href="#Integration">Integration</a></h2>
+<dl class="Bl-tag">
+  <dt id="lf"><a class="permalink" href="#lf"><i>lf</i> file manager:</a></dt>
+  <dd>
+    <pre>set previewer ctpv
+set cleaner ctpvclear
+&amp;ctpv -s $id
+cmd on-quit $ctpv -e $id
+    </pre>
+  </dd>
+</dl>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="How_previews_are_selected"><a class="permalink" href="#How_previews_are_selected">How
+  previews are selected</a></h2>
+<p class="Pp">Initially, <b>ctpv</b> retrieves MIME type and extension from
+    <i>file</i> given in the first argument (MIME type is extracted using
+    <b>magic</b>(5)).</p>
+<p class="Pp">Then it creates a list of all previews in a special order, where
+    previews that are more specific appear at the top and more generic ones at
+    the bottom. The list can be viewed by using <b>-l</b> option. The order can
+    be changed, see <a href="#Setting_priority"><i>Setting priority</i></a>.</p>
+<p class="Pp">Finally, <b>ctpv</b> goes through the list starting with the first
+    element and checks if a preview matches <i>file</i>'s extension and MIME
+    type. If it does, it runs the preview script. If the script exits with
+    status 127 (which usually means that a command was not found), the next
+    appropriate preview is selected, and so on.</p>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="OPTIONS"><a class="permalink" href="#OPTIONS">OPTIONS</a></h1>
+<dl class="Bl-tag">
+  <dt id="l"><a class="permalink" href="#l"><b>-l</b></a></dt>
+  <dd>List all previews.</dd>
+  <dt id="m"><a class="permalink" href="#m"><b>-m</b> <i>files</i>...</a></dt>
+  <dd>Print extension and MIME type of specified files.</dd>
+  <dt id="s"><a class="permalink" href="#s"><b>-s</b> <i>id</i></a></dt>
+  <dd>Start server with ID <i>id</i>.</dd>
+  <dt id="c"><a class="permalink" href="#c"><b>-c</b> <i>id</i></a></dt>
+  <dd>Send <b>clear</b> command to server with ID <i>id</i> (usually, it removes
+      image from terminal).</dd>
+  <dt id="e"><a class="permalink" href="#e"><b>-e</b> <i>id</i></a></dt>
+  <dd>Kill server with ID <i>id</i>.</dd>
+</dl>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="CONFIGURATION"><a class="permalink" href="#CONFIGURATION">CONFIGURATION</a></h1>
+<p class="Pp">The configuration file format somewhat resembles one used by
+    <i>lf</i>. There are several commands that allow you to customize
+    <b>ctpv</b> behavior. Commands are separated by newlines. Comments start
+    with number sign (<b>#</b>) like in many other formats.</p>
+<section class="Ss">
+<h2 class="Ss" id="Defining_custom_previews"><a class="permalink" href="#Defining_custom_previews">Defining
+  custom previews</a></h2>
+<p class="Pp">A snippet below defines a new preview with name <i>cow</i> that
+    applies to files with extension <i>.moo</i>. A preview itself is a shell
+    script enclosed within double curly braces (this particular one utilizes the
+    famous <i>cowsay</i> program):</p>
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre>preview cow .moo {{
+	cowsay &lt; &quot;$f&quot;
+}}
+    </pre>
+  </dd>
+</dl>
+<p class="Pp">Running <i>ctpv&#x00A0;file.moo</i> where <i>file.moo</i> contains
+    &#x201C;some text&#x201D; will produce the following output:</p>
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre> ___________ 
+&lt; some text &gt;
+ &#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212; 
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||&#x2212;&#x2212;&#x2212;&#x2212;w |
+                ||     ||
+    </pre>
+  </dd>
+</dl>
+<p class="Pp">Variable <b>$f</b> stores <i>file</i> that was passed as a first
+    argument to <b>ctpv</b>. It's strongly suggested to enclose <b>$f</b> with
+    double quotes (<b>&quot;$f&quot;</b>) because otherwise the script will not
+    work as expected if <b>$f</b> stores a filename with whitespace.</p>
+<p class="Pp">There are other variables that are exported into preview script
+    environment: <b>$w</b>, <b>$h</b>, <b>$x</b>, <b>$y</b> and <b>$id</b>.
+    However, they are rarely used even by built-in previews and are only set if
+    corresponding arguments were passed to <b>ctpv</b> command (see
+    <a href="#SYNOPSIS"><i>SYNOPSIS</i></a>).</p>
+<p class="Pp">You can specify MIME type instead of filename extension in preview
+    definition:</p>
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre>preview json_example application/json {{
+	# preview json files
+}}
+    </pre>
+  </dd>
+</dl>
+<p class="Pp">And you also can omit subtype part of the MIME type by replacing
+    it with <b>*</b>.</p>
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre>preview any_text_example text/* {{
+	# this one applies to all text files
+}}
+    </pre>
+  </dd>
+</dl>
+<p class="Pp">Setting subtype to <b>*</b> will make the preview work for any
+    file which MIME type starts with <b>text/</b>.</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Setting_priority"><a class="permalink" href="#Setting_priority">Setting
+  priority</a></h2>
+<p class="Pp">If there are several previews that apply to the same file type,
+    only the top one in the list is chosen (see <i>How previews are
+    selected</i>). To alter this behavior, you can use <b>priority</b> command
+    to change preview priority:</p>
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre>priority cat
+    </pre>
+  </dd>
+</dl>
+<p class="Pp">The snippet above sets priority of preview named
+    &#x201C;cat&#x201D; to 1, thus now it's used for all text files. It's
+    possible to specify an integer as the second argument to set priority other
+    than 1 (may also be negative).</p>
+</section>
+<section class="Ss">
+<h2 class="Ss" id="Removing_previews"><a class="permalink" href="#Removing_previews">Removing
+  previews</a></h2>
+<p class="Pp"><b>remove</b> command simply removes a preview (also works for
+    built-in ones):</p>
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre>remove cat
+    </pre>
+  </dd>
+</dl>
+</section>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="FILES"><a class="permalink" href="#FILES">FILES</a></h1>
+<dl class="Bl-tag">
+  <dt><i>$XDG_CONFIG_HOME/ctpv/config</i></dt>
+  <dd>Configuration file. If <i>$XDG_CONFIG_HOME</i> is empty or not set,
+      defaults to <i>$HOME/.config</i>.</dd>
+</dl>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SEE_ALSO"><a class="permalink" href="#SEE_ALSO">SEE
+  ALSO</a></h1>
+<p class="Pp"><b>lf</b>(1)</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="AUTHOR"><a class="permalink" href="#AUTHOR">AUTHOR</a></h1>
+<p class="Pp">Written by Nikita Ivanov.</p>
+</section>
+</div>
+<table class="foot">
+  <tr>
+    <td class="foot-date">June 2022</td>
+    <td class="foot-os">Linux</td>
+  </tr>
+</table>
+</body>
+</html>
