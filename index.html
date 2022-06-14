@@ -71,11 +71,16 @@
 <section class="Sh">
 <h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
 <p class="Pp"><b>ctpv</b> is a previewer utility made for integration into other
-    programs. It supports a variety of &#x201C;previews&#x201D; out of the box
-    (including one for previewing images with <i>ueberzug</i>) and an option for
-    defining custom previews.</p>
+    programs. It supports a variety of &#x201C;previews&#x201D; out of the box,
+    as well as an option to define custom ones.</p>
+<p class="Pp">When <b>ctpv</b> is given <i>file</i> (and, optionally, other
+    arguments (see <a href="#SYNOPSIS"><i>SYNOPSIS</i></a>)), it determines an appropriate preview for
+    it and runs its script. The script produces preview content and prints it to
+    <i>stdout</i>.</p>
 <section class="Ss">
 <h2 class="Ss" id="Integration"><a class="permalink" href="#Integration">Integration</a></h2>
+<p class="Pp">The following snippets should be added to configuration files of
+    corresponding programs:</p>
 <dl class="Bl-tag">
   <dt id="lf"><a class="permalink" href="#lf"><i>lf</i> file manager:</a></dt>
   <dd>
@@ -91,7 +96,7 @@ cmd on-quit $ctpv -e $id
 <h2 class="Ss" id="How_previews_are_selected"><a class="permalink" href="#How_previews_are_selected">How
   previews are selected</a></h2>
 <p class="Pp">Initially, <b>ctpv</b> retrieves MIME type and extension from
-    <i>file</i> given in the first argument (MIME type is extracted using
+    <i>file</i> passed in the first argument (MIME type is extracted using
     <b>magic</b>(5)).</p>
 <p class="Pp">Then it creates a list of all previews in a special order, where
     previews that are more specific appear at the top and more generic ones at
@@ -99,9 +104,9 @@ cmd on-quit $ctpv -e $id
     be changed, see <a href="#Setting_priority"><i>Setting priority</i></a>.</p>
 <p class="Pp">Finally, <b>ctpv</b> goes through the list starting with the first
     element and checks if a preview matches <i>file</i>'s extension and MIME
-    type. If it does, it runs the preview script. If the script exits with
-    status 127 (which usually means that a command was not found), the next
-    appropriate preview is selected, and so on.</p>
+    type. If it does, it runs a preview script. If the script exits with status
+    127 (which usually means that a command was not found), the next appropriate
+    preview is selected, and so on.</p>
 </section>
 </section>
 <section class="Sh">
@@ -123,9 +128,9 @@ cmd on-quit $ctpv -e $id
 <section class="Sh">
 <h1 class="Sh" id="CONFIGURATION"><a class="permalink" href="#CONFIGURATION">CONFIGURATION</a></h1>
 <p class="Pp">The configuration file format somewhat resembles one used by
-    <i>lf</i>. There are several commands that allow you to customize
-    <b>ctpv</b> behavior. Commands are separated by newlines. Comments start
-    with number sign (<b>#</b>) like in many other formats.</p>
+    <i>lf</i>. There are several commands that behavior of <b>ctpv</b>. Commands
+    are separated by newlines. Comments start with number sign (<b>#</b>) like
+    in many other formats.</p>
 <section class="Ss">
 <h2 class="Ss" id="Defining_custom_previews"><a class="permalink" href="#Defining_custom_previews">Defining
   custom previews</a></h2>
@@ -189,8 +194,8 @@ cmd on-quit $ctpv -e $id
     </pre>
   </dd>
 </dl>
-<p class="Pp">Setting subtype to <b>*</b> will make the preview work for any
-    file which MIME type starts with <b>text/</b>.</p>
+<p class="Pp">Setting subtype to <b>*</b> will make the preview above work for
+    any file which MIME type starts with <b>text/</b>.</p>
 </section>
 <section class="Ss">
 <h2 class="Ss" id="Setting_priority"><a class="permalink" href="#Setting_priority">Setting
