@@ -52,19 +52,7 @@
 <table class="Nm">
   <tr>
     <td><code class="Nm">ctpv</code></td>
-    <td><b>-s</b> <i>id</i></td>
-  </tr>
-</table>
-<table class="Nm">
-  <tr>
-    <td><code class="Nm">ctpv</code></td>
-    <td><b>-c</b> <i>id</i></td>
-  </tr>
-</table>
-<table class="Nm">
-  <tr>
-    <td><code class="Nm">ctpv</code></td>
-    <td><b>-e</b> <i>id</i></td>
+    <td>{<b>-s</b>|<b>-c</b>|<b>-e</b>} <i>id</i></td>
   </tr>
 </table>
 </section>
@@ -73,22 +61,26 @@
 <p class="Pp"><b>ctpv</b> is a previewer utility made for integration into other
     programs. It supports a variety of &#x201C;previews&#x201D; out of the box,
     as well as an option to define custom ones.</p>
-<p class="Pp">When <b>ctpv</b> is given <i>file</i> (and, optionally, other
-    arguments (see <a href="#SYNOPSIS"><i>SYNOPSIS</i></a>)), it determines an appropriate preview for
-    it and runs its script. The script produces preview content and prints it to
-    <i>stdout</i>.</p>
+<p class="Pp">When <b>ctpv</b> is given a file, it determines an appropriate
+    preview for it and runs its script. The script produces preview content and
+    prints it to standard output.</p>
 <section class="Ss">
 <h2 class="Ss" id="Integration"><a class="permalink" href="#Integration">Integration</a></h2>
-<p class="Pp">The following snippets should be added to configuration files of
-    corresponding programs:</p>
 <dl class="Bl-tag">
-  <dt id="lf"><a class="permalink" href="#lf"><i>lf</i> file manager:</a></dt>
+  <dt id="lf"><a class="permalink" href="#lf"><i>lf</i> file manager</a></dt>
+  <dd>Add this snippet to <i>lf</i> configuration file (usually located at
+      <i>~/.config/lf/lfrc</i>).</dd>
+</dl>
+<dl class="Bl-tag">
+  <dt></dt>
   <dd>
+    <br/>
     <pre>set previewer ctpv
 set cleaner ctpvclear
 &amp;ctpv -s $id
 cmd on-quit $ctpv -e $id
     </pre>
+    <br/>
   </dd>
 </dl>
 </section>
@@ -127,10 +119,12 @@ cmd on-quit $ctpv -e $id
 </section>
 <section class="Sh">
 <h1 class="Sh" id="CONFIGURATION"><a class="permalink" href="#CONFIGURATION">CONFIGURATION</a></h1>
-<p class="Pp">The configuration file format somewhat resembles one used by
-    <i>lf</i>. There are several commands that behavior of <b>ctpv</b>. Commands
-    are separated by newlines. Comments start with number sign (<b>#</b>) like
-    in many other formats.</p>
+<p class="Pp"><b>ctpv</b> uses a configuration file usually located at
+    <i>~/.config/ctpv/config</i> (see <a href="#FILES"><i>FILES</i></a>). Its format somewhat
+    resembles one used by <i>lf</i>. There are several &#x201C;commands&#x201D;
+    that can be used to change previews or set different settings. Commands are
+    separated by newlines. Comments start with number sign (<b>#</b>) like in
+    many other formats.</p>
 <section class="Ss">
 <h2 class="Ss" id="Defining_custom_previews"><a class="permalink" href="#Defining_custom_previews">Defining
   custom previews</a></h2>
@@ -138,21 +132,21 @@ cmd on-quit $ctpv -e $id
     applies to files with extension <i>.moo</i>. A preview itself is a shell
     script enclosed within double curly braces (this particular one utilizes the
     famous <i>cowsay</i> program):</p>
-<dl class="Bl-tag">
-  <dt></dt>
-  <dd>
-    <pre>preview cow .moo {{
-	cowsay &lt; &quot;$f&quot;
+<p class="Pp">
+  <br/>
+</p>
+<pre>preview cow .moo {{
+<br/>
+    cowsay &lt; &quot;$f&quot;
 }}
-    </pre>
-  </dd>
-</dl>
+</pre>
+<br/>
 <p class="Pp">Running <i>ctpv&#x00A0;file.moo</i> where <i>file.moo</i> contains
     &#x201C;some text&#x201D; will produce the following output:</p>
-<dl class="Bl-tag">
-  <dt></dt>
-  <dd>
-    <pre> ___________ 
+<p class="Pp">
+  <br/>
+</p>
+<pre> ___________ 
 &lt; some text &gt;
  &#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212; 
         \   ^__^
@@ -160,9 +154,8 @@ cmd on-quit $ctpv -e $id
             (__)\       )\/\
                 ||&#x2212;&#x2212;&#x2212;&#x2212;w |
                 ||     ||
-    </pre>
-  </dd>
-</dl>
+</pre>
+<br/>
 <p class="Pp">Variable <b>$f</b> stores <i>file</i> that was passed as a first
     argument to <b>ctpv</b>. It's strongly suggested to enclose <b>$f</b> with
     double quotes (<b>&quot;$f&quot;</b>) because otherwise the script will not
@@ -174,26 +167,26 @@ cmd on-quit $ctpv -e $id
     <a href="#SYNOPSIS"><i>SYNOPSIS</i></a>).</p>
 <p class="Pp">You can specify MIME type instead of filename extension in preview
     definition:</p>
-<dl class="Bl-tag">
-  <dt></dt>
-  <dd>
-    <pre>preview json_example application/json {{
-	# preview json files
+<p class="Pp">
+  <br/>
+</p>
+<pre>preview json_example application/json {{
+<br/>
+    # preview json files
 }}
-    </pre>
-  </dd>
-</dl>
+</pre>
+<br/>
 <p class="Pp">And you also can omit subtype part of the MIME type by replacing
     it with <b>*</b>.</p>
-<dl class="Bl-tag">
-  <dt></dt>
-  <dd>
-    <pre>preview any_text_example text/* {{
-	# this one applies to all text files
+<p class="Pp">
+  <br/>
+</p>
+<pre>preview any_text_example text/* {{
+<br/>
+    # this one applies to all text files
 }}
-    </pre>
-  </dd>
-</dl>
+</pre>
+<br/>
 <p class="Pp">Setting subtype to <b>*</b> will make the preview above work for
     any file which MIME type starts with <b>text/</b>.</p>
 </section>
@@ -204,13 +197,12 @@ cmd on-quit $ctpv -e $id
     only the top one in the list is chosen (see <i>How previews are
     selected</i>). To alter this behavior, you can use <b>priority</b> command
     to change preview priority:</p>
-<dl class="Bl-tag">
-  <dt></dt>
-  <dd>
-    <pre>priority cat
-    </pre>
-  </dd>
-</dl>
+<p class="Pp">
+  <br/>
+</p>
+<pre>priority cat
+</pre>
+<br/>
 <p class="Pp">The snippet above sets priority of preview named
     &#x201C;cat&#x201D; to 1, thus now it's used for all text files. It's
     possible to specify an integer as the second argument to set priority other
@@ -221,21 +213,20 @@ cmd on-quit $ctpv -e $id
   previews</a></h2>
 <p class="Pp"><b>remove</b> command simply removes a preview (also works for
     built-in ones):</p>
-<dl class="Bl-tag">
-  <dt></dt>
-  <dd>
-    <pre>remove cat
-    </pre>
-  </dd>
-</dl>
+<p class="Pp">
+  <br/>
+</p>
+<pre>remove cat
+</pre>
+<br/>
 </section>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="FILES"><a class="permalink" href="#FILES">FILES</a></h1>
 <dl class="Bl-tag">
   <dt><i>$XDG_CONFIG_HOME/ctpv/config</i></dt>
-  <dd>Configuration file. If <i>$XDG_CONFIG_HOME</i> is empty or not set,
-      defaults to <i>$HOME/.config</i>.</dd>
+  <dd>Configuration file. If <i>$XDG_CONFIG_HOME</i> is not set, defaults to
+      <i>~/.config</i>.</dd>
 </dl>
 </section>
 <section class="Sh">

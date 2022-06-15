@@ -1,11 +1,25 @@
 #!/bin/sh
 
-branch="$(git branch --show-current)"
+pull() {
+	ret=0
 
-git stash
-git checkout master
-git pull
-git checkout "$branch"
-git stash pop
+	branch="$(git branch --show-current)"
 
-git show master:doc/ctpv.1 | ./manhtml.sh > index.html
+	git stash
+
+	git checkout master && git pull || ret=1
+
+	git checkout "$branch"
+	git stash pop
+
+	return "$ret"
+}
+
+commit() {
+	git add -A
+	git commit --no-edit --message='Update man page'
+}
+
+pull &&
+	git show master:doc/ctpv.1 | ./manhtml.sh > index.html &&
+	commit
