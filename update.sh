@@ -1,16 +1,19 @@
 #!/bin/sh
 
 pull() {
-	ret=0
+	ret=1
 
 	branch="$(git branch --show-current)"
 
-	git stash
+	if git stash -q; then
+		if git checkout -q master; then
+			git pull && ret=0
 
-	git checkout master && git pull || ret=1
+			git checkout -q "$branch"
+		fi
 
-	git checkout "$branch"
-	git stash pop
+		git stash pop -q
+	fi
 
 	return "$ret"
 }
