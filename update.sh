@@ -16,7 +16,7 @@ pull() {
 }
 
 commit() {
-	git add -A
+	git add index.html
 	git commit --no-edit --message='Update man page'
 }
 
