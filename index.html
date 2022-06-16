@@ -71,15 +71,16 @@
   <dd>Add this snippet to <i>lf</i> configuration file (usually located at
       <i>~/.config/lf/lfrc</i>).</dd>
 </dl>
-<p class="Pp">
-  <br/>
-</p>
-<pre>set previewer ctpv
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre>set previewer ctpv
 set cleaner ctpvclear
 &amp;ctpv -s $id
 cmd on-quit $ctpv -e $id
-</pre>
-<br/>
+    </pre>
+  </dd>
+</dl>
 </section>
 <section class="Ss">
 <h2 class="Ss" id="How_previews_are_selected"><a class="permalink" href="#How_previews_are_selected">How
@@ -129,20 +130,21 @@ cmd on-quit $ctpv -e $id
     applies to files with extension <i>.moo</i>. A preview itself is a shell
     script enclosed within double curly braces (this particular one utilizes the
     famous <i>cowsay</i> program):</p>
-<p class="Pp">
-  <br/>
-</p>
-<pre>preview cow .moo {{
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre>preview cow .moo {{
     cowsay &lt; &quot;$f&quot;
 }}
-</pre>
-<br/>
+    </pre>
+  </dd>
+</dl>
 <p class="Pp">Running <i>ctpv&#x00A0;file.moo</i> where <i>file.moo</i> contains
     &#x201C;some text&#x201D; will produce the following output:</p>
-<p class="Pp">
-  <br/>
-</p>
-<pre>&#x00A0;___________&#x00A0;
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre>&#x00A0;___________&#x00A0;
 &lt;&#x00A0;some&#x00A0;text&#x00A0;&gt;
 &#x00A0;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x2212;&#x00A0;
 &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;\&#x00A0;&#x00A0;&#x00A0;^__^
@@ -150,8 +152,9 @@ cmd on-quit $ctpv -e $id
 &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(__)\&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;)\/\
 &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;||&#x2212;&#x2212;&#x2212;&#x2212;w&#x00A0;|
 &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;||&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;||
-</pre>
-<br/>
+    </pre>
+  </dd>
+</dl>
 <p class="Pp">Variable <b>$f</b> stores <i>file</i> that was passed as a first
     argument to <b>ctpv</b>. It's strongly suggested to enclose <b>$f</b> with
     double quotes (<b>&quot;$f&quot;</b>) because otherwise the script will not
@@ -163,24 +166,26 @@ cmd on-quit $ctpv -e $id
     <a href="#SYNOPSIS"><i>SYNOPSIS</i></a>).</p>
 <p class="Pp">You can specify MIME type instead of filename extension in preview
     definition:</p>
-<p class="Pp">
-  <br/>
-</p>
-<pre>preview json_example application/json {{
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre>preview json_example application/json {{
     # preview json files
 }}
-</pre>
-<br/>
+    </pre>
+  </dd>
+</dl>
 <p class="Pp">And you also can omit subtype part of the MIME type by replacing
     it with <b>*</b>.</p>
-<p class="Pp">
-  <br/>
-</p>
-<pre>preview any_text_example text/* {{
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre>preview any_text_example text/* {{
     # this one applies to all text files
 }}
-</pre>
-<br/>
+    </pre>
+  </dd>
+</dl>
 <p class="Pp">Setting subtype to <b>*</b> will make the preview above work for
     any file which MIME type starts with <b>text/</b>.</p>
 </section>
@@ -191,12 +196,13 @@ cmd on-quit $ctpv -e $id
     only the top one in the list is chosen (see <i>How previews are
     selected</i>). To alter this behavior, you can use <b>priority</b> command
     to change preview priority:</p>
-<p class="Pp">
-  <br/>
-</p>
-<pre>priority cat
-</pre>
-<br/>
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre>priority cat
+    </pre>
+  </dd>
+</dl>
 <p class="Pp">The snippet above sets priority of preview named
     &#x201C;cat&#x201D; to 1, thus now it's used for all text files. It's
     possible to specify an integer as the second argument to set priority other
@@ -207,12 +213,13 @@ cmd on-quit $ctpv -e $id
   previews</a></h2>
 <p class="Pp"><b>remove</b> command simply removes a preview (also works for
     built-in ones):</p>
-<p class="Pp">
-  <br/>
-</p>
-<pre>remove cat
-</pre>
-<br/>
+<dl class="Bl-tag">
+  <dt></dt>
+  <dd>
+    <pre>remove cat
+    </pre>
+  </dd>
+</dl>
 </section>
 </section>
 <section class="Sh">
