@@ -16,8 +16,8 @@ pull() {
 }
 
 commit() {
-	git add index.html
-	git commit --no-edit --message='Update man page'
+	git add index.html &&
+		git commit --no-edit --message='Update man page'
 }
 
 pull &&
