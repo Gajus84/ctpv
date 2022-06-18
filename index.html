@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<!-- This is an automatically generated file.  Do not edit.
+   t
+ -->
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -64,6 +67,70 @@
 <p class="Pp">When <b>ctpv</b> is given a file, it determines an appropriate
     preview for it and runs its script. The script produces preview content and
     prints it to standard output.</p>
+<section class="Ss">
+<h2 class="Ss" id="Dependencies"><a class="permalink" href="#Dependencies">Dependencies</a></h2>
+<p class="Pp">All the previews require specific programs to function. If a
+    required program is not found on the system, <b>ctpv</b> will try to use
+    another preview.</p>
+<table class="tbl" border="1" style="border-style: solid;">
+  <tr>
+    <td><b>File type</b></td>
+    <td><b>Programs</b></td>
+  </tr>
+  <tr>
+    <td>any</td>
+    <td><i>exiftool cat</i></td>
+  </tr>
+  <tr>
+    <td>archive</td>
+    <td><i>atool</i></td>
+  </tr>
+  <tr>
+    <td>diff</td>
+    <td><i>colordiff delta diff-so-fancy</i></td>
+  </tr>
+  <tr>
+    <td>directory</td>
+    <td><i>ls</i></td>
+  </tr>
+  <tr>
+    <td>html</td>
+    <td><i>elinks lynx w3m</i></td>
+  </tr>
+  <tr>
+    <td>image</td>
+    <td><i>ueberzug</i></td>
+  </tr>
+  <tr>
+    <td>json</td>
+    <td><i>jq</i></td>
+  </tr>
+  <tr>
+    <td>libreoffice</td>
+    <td><i>libreoffice</i></td>
+  </tr>
+  <tr>
+    <td>markdown</td>
+    <td><i>mdcat</i></td>
+  </tr>
+  <tr>
+    <td>pdf</td>
+    <td><i>pdftoppm</i></td>
+  </tr>
+  <tr>
+    <td>text</td>
+    <td><i>bat cat highlight source-highlight</i></td>
+  </tr>
+  <tr>
+    <td>torrent</td>
+    <td><i>transmission-show</i></td>
+  </tr>
+  <tr>
+    <td>video</td>
+    <td><i>ffmpegthumbnailer</i></td>
+  </tr>
+</table>
+</section>
 <section class="Ss">
 <h2 class="Ss" id="Integration"><a class="permalink" href="#Integration">Integration</a></h2>
 <dl class="Bl-tag">
